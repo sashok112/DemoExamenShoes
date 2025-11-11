@@ -1,12 +1,4 @@
 -- ==========================
---   Таблица пунктов выдачи
--- ==========================
-CREATE TABLE public.pickup_points (
-    point_id SERIAL PRIMARY KEY,
-    point_address CHARACTER VARYING(500) NOT NULL
-);
-
--- ==========================
 --   Таблица пользователей
 -- ==========================
 CREATE TABLE public.users (
@@ -42,7 +34,7 @@ CREATE TABLE public.orders (
     order_id SERIAL PRIMARY KEY,
     order_date DATE NOT NULL,
     delivery_date DATE,
-    pickup_point_id INTEGER,
+    pickup_point CHARACTER VARYING(500),  -- адрес пункта выдачи
     user_id INTEGER,
     pickup_code INTEGER,
     status CHARACTER VARYING(50)
@@ -61,13 +53,6 @@ CREATE TABLE public.order_items (
 -- ========================================
 --   Установка внешних ключей отдельными командами
 -- ========================================
-
--- Связь: orders → pickup_points
-ALTER TABLE public.orders
-ADD CONSTRAINT fk_orders_pickup_point
-FOREIGN KEY (pickup_point_id)
-REFERENCES public.pickup_points(point_id)
-ON DELETE SET NULL;
 
 -- Связь: orders → users
 ALTER TABLE public.orders
