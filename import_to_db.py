@@ -47,6 +47,7 @@ def main():
         # ===== Импорт товаров =====
         products = pd.read_excel(PATH_PRODUCTS)
         for _, row in products.iterrows():
+            photo_path = row["Фото"] if pd.notna(row.get("Фото")) and row["Фото"] != "" else "Icon.JPG"
             cur.execute("""
                 INSERT INTO public.products (
                     article, product_name, unit, price, supplier, manufacturer,
@@ -57,7 +58,7 @@ def main():
                 row["Артикул"], row["Наименование товара"], row["Единица измерения"],
                 float(row["Цена"]), row["Поставщик"], row["Производитель"],
                 row["Категория товара"], float(row["Действующая скидка"]),
-                int(row["Кол-во на складе"]), row["Описание товара"], row.get("Фото", None)
+                int(row["Кол-во на складе"]), row["Описание товара"], photo_path
             ))
         print(f"✅ Импортировано товаров: {len(products)}")
 
