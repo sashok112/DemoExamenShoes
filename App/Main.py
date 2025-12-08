@@ -4,6 +4,7 @@ import psycopg2
 from PyQt5 import QtWidgets, uic
 import pandas as pd
 
+PATH_LOGIN_UI = "/home/astep/DemoExamenShoes/UI/login.ui"
 
 DB_CONFIG = {
     "host": "localhost",
@@ -13,7 +14,6 @@ DB_CONFIG = {
     "password": "9090"
 }
 
-
 def get_db_connection():
     return psycopg2.connect(**DB_CONFIG)
 
@@ -21,7 +21,7 @@ def get_db_connection():
 class LoginDialog(QtWidgets.QDialog):
     def __init__(self):
         super().__init__()
-        uic.loadUi("login.ui", self)  # убедись, что файл в той же папке
+        uic.loadUi(PATH_LOGIN_UI, self)  # убедись, что файл в той же папке
         # ожидаемые имена виджетов из .ui:
         # lineEdit_login, lineEdit_password, btn_login, btn_guest, label_message
 
@@ -35,7 +35,7 @@ class LoginDialog(QtWidgets.QDialog):
         password = self.lineEdit_password.text().strip()
 
         if not login or not password:
-            self.statusBar.setText("Введите логин и пароль")
+            self.label_message.setText("Введите логин и пароль")
             return
 
         try:
@@ -49,7 +49,7 @@ class LoginDialog(QtWidgets.QDialog):
             cur.close()
             conn.close()
         except Exception as e:
-            self.statusBar.setText(f"Ошибка БД: {e}")
+            self.label_message.setText(f"Ошибка БД: {e}")
             return
 
         if row:
@@ -57,7 +57,7 @@ class LoginDialog(QtWidgets.QDialog):
             # Открываем главный интерфейс и передаём информацию о пользователе
             self.open_main(full_name, role)
         else:
-            self.statusBar.setText("Неверный логин или пароль")
+            self.label_message.setText("Неверный логин или пароль")
 
     def continue_as_guest(self):
         # Открываем главное окно как гость
@@ -68,10 +68,6 @@ class LoginDialog(QtWidgets.QDialog):
         self.main_win = MainWindow(full_name=full_name, role=role)
         self.main_win.show()
 
-
-# =====================
-# Главное окно (main.ui)
-# =====================
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, full_name: str, role: str):
         super().__init__()
