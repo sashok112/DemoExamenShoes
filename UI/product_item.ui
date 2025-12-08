@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProductItem</class>
+ <widget class="QWidget" name="ProductItem">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>501</width>
+    <height>220</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>140</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777214</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <layout class="QHBoxLayout" name="mainLayout">
+   <item>
+    <widget class="QLabel" name="photo">
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>120</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>120</width>
+       <height>120</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="infoLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="name">
+         <property name="styleSheet">
+          <string notr="true">font-size: 18px; font-weight: bold;</string>
+         </property>
+         <property name="text">
+          <string>Название товара</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="category">
+         <property name="text">
+          <string>Категория: </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="manufacturer">
+       <property name="text">
+        <string>Производитель: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="description">
+       <property name="text">
+        <string>описание</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="supplier">
+       <property name="text">
+        <string>Поставщик</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="price">
+       <property name="styleSheet">
+        <string notr="true">font-size: 16px; color: #006400;</string>
+       </property>
+       <property name="text">
+        <string>Цена: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="unit">
+       <property name="text">
+        <string>ед изм</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="stock">
+       <property name="text">
+        <string>Остаток: </string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="discount">
+     <property name="styleSheet">
+      <string notr="true">color: #B22222; font-weight: bold;</string>
+     </property>
+     <property name="text">
+      <string>Скидка: </string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

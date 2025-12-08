@@ -1,10 +1,12 @@
-# app.py
 import sys
+import os
 import psycopg2
-from PyQt5 import QtWidgets, uic
-import pandas as pd
+from PyQt5 import QtWidgets, uic, QtGui, QtCore
 
 PATH_LOGIN_UI = "/home/astep/DemoExamenShoes/UI/login.ui"
+PATH_MAIN_UI = "/home/astep/DemoExamenShoes/UI/main.ui"
+PATH_PRODUCT_ITEM_UI = "/home/astep/DemoExamenShoes/UI/product_item.ui"
+PATH_PHOTOS = "/home/astep/DemoExamenShoes/import"
 
 DB_CONFIG = {
     "host": "localhost",
@@ -18,17 +20,17 @@ def get_db_connection():
     return psycopg2.connect(**DB_CONFIG)
 
 
+# =====================================================
+#  ЛОГИН ОКНО
+# =====================================================
 class LoginDialog(QtWidgets.QDialog):
     def __init__(self):
         super().__init__()
-        uic.loadUi(PATH_LOGIN_UI, self)  # убедись, что файл в той же папке
-        # ожидаемые имена виджетов из .ui:
-        # lineEdit_login, lineEdit_password, btn_login, btn_guest, label_message
+        uic.loadUi(PATH_LOGIN_UI, self)
 
         self.btn_login.clicked.connect(self.try_login)
         self.btn_guest.clicked.connect(self.continue_as_guest)
         self.lineEdit_password.returnPressed.connect(self.try_login)
-        self.db_conn = None
 
     def try_login(self):
         login = self.lineEdit_login.text().strip()
@@ -41,10 +43,13 @@ class LoginDialog(QtWidgets.QDialog):
         try:
             conn = get_db_connection()
             cur = conn.cursor()
-            cur.execute(
-                "SELECT user_id, full_name, role FROM public.users WHERE login=%s AND user_password=%s;",
-                (login, password)
-            )
+
+            cur.execute("""
+                SELECT user_id, full_name, role
+                FROM public.users
+                WHERE login=%s AND user_password=%s;
+            """, (login, password))
+
             row = cur.fetchone()
             cur.close()
             conn.close()
@@ -54,72 +59,126 @@ class LoginDialog(QtWidgets.QDialog):
 
         if row:
             user_id, full_name, role = row
-            # Открываем главный интерфейс и передаём информацию о пользователе
             self.open_main(full_name, role)
         else:
             self.label_message.setText("Неверный логин или пароль")
 
     def continue_as_guest(self):
-        # Открываем главное окно как гость
         self.open_main("Гость", "guest")
 
     def open_main(self, full_name, role):
-        self.accept()  # Закрываем диалог с результатом accepted
+        self.accept()
         self.main_win = MainWindow(full_name=full_name, role=role)
         self.main_win.show()
 
+
+# =====================================================
+#  ГЛАВНОЕ ОКНО
+# =====================================================
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, full_name: str, role: str):
         super().__init__()
-        uic.loadUi("main.ui", self)  # ожидает label_user, btn_logout, stackedWidget
-        # Сохраняем пользователя
+        uic.loadUi(PATH_MAIN_UI, self)
+
         self.full_name = full_name
-        self.role = role.lower()  # ожидаем guest, авторизированный клиент, менеджер, администратор
+        self.role = role.lower()
 
-        # Настроим отображение ФИО в правом верхнем углу
-        # label_user — QLabel в main.ui
         self.label_user.setText(self.full_name)
-
-        # Подключаем кнопку выхода
         self.btn_logout.clicked.connect(self.logout)
 
-        # Подберём индекс страницы по роли
-        # согласуем: guest -> 0, client -> 1, manager -> 2, admin -> 3
-        idx = 0
-        if "гость" in self.role or self.role == "guest":
+        self.set_role_page()
+        self.load_products()
+
+    # ---------------------------------------------------
+    def set_role_page(self):
+        r = self.role
+        if r in ("guest", "гость"):
             idx = 0
-        elif "клиент" in self.role or "author" in self.role or "client" in self.role or "auth" in self.role:
+        elif "клиент" in r:
             idx = 1
-        elif "менеджер" in self.role or "manager" in self.role:
+        elif "менеджер" in r:
             idx = 2
-        elif "администратор" in self.role or "admin" in self.role:
+        elif "администратор" in r or "admin" in r:
             idx = 3
         else:
-            # если роль хранится как "Авторизированный клиент" (по-русски) — корректируем:
-            if "автор" in self.role and "клиент" in self.role:
-                idx = 1
+            idx = 0
+
+        self.stackedWidget.setCurrentIndex(idx)
+
+    # ---------------------------------------------------
+    def load_products(self):
+        """Загрузка карточек товаров в layout_products"""
 
         try:
-            self.stackedWidget.setCurrentIndex(idx)
-        except Exception:
-            # на случай, если имена/структура другой — поставить 0
-            self.stackedWidget.setCurrentIndex(0)
+            conn = get_db_connection()
+            cur = conn.cursor()
 
+            cur.execute("""
+                SELECT id, product_name, price, manufacturer, photo, category, discount, unit, supplier, description
+                FROM public.products;
+            """)
+
+            rows = cur.fetchall()
+            cur.close()
+            conn.close()
+
+        except Exception as e:
+            print("Ошибка загрузки:", e)
+            return
+
+        layout: QtWidgets.QVBoxLayout = self.layout_products
+
+        # Очистка старых карточек
+        while layout.count():
+            item = layout.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        # Создание карточек
+        for pid, name, price, manufacturer, photo, category, discount, unit, supplier, description in rows:
+            widget = uic.loadUi(PATH_PRODUCT_ITEM_UI)
+
+            widget.name.setText(name)
+            widget.price.setText(f"{price} ₽")
+            widget.manufacturer.setText(manufacturer)
+            widget.category.setText(category)
+            widget.discount.setText(str(discount))
+            #TODO СДЕЛАТЬ СКИДКУ РАЗНЫХ ЦВЕТОВ
+            widget.unit.setText(unit)
+            widget.supplier.setText(supplier)
+            widget.description.setText(description)
+            # Загрузка фото
+            if photo:
+                full_path = os.path.join(PATH_PHOTOS, photo)
+                if os.path.exists(full_path):
+                    pix = QtGui.QPixmap(full_path)
+                    widget.photo.setPixmap(
+                        pix.scaled(150, 150, QtCore.Qt.KeepAspectRatio)
+                    )
+                else:
+                    widget.photo.setText("Нет фото")
+            else:
+                widget.photo.setText("Нет фото")
+
+            layout.addWidget(widget)
+
+        layout.addStretch()
+
+    # ---------------------------------------------------
     def logout(self):
-        # Закрываем главное окно и открываем окно логина снова
         self.close()
-        self.login_again = LoginDialog()
-        self.login_again.show()
+        login = LoginDialog()
+        login.show()
 
 
-# =====================
-# Запуск приложения
-# =====================
+# =====================================================
+#  ЗАПУСК
+# =====================================================
 def main():
     app = QtWidgets.QApplication(sys.argv)
 
-    login = LoginDialog()
-    login.show()
+    dlg = LoginDialog()
+    dlg.show()
 
     sys.exit(app.exec_())
 

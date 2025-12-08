@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1000</width><height>700</height></rect>
+  </property>
+  <property name="windowTitle">
+   <string>Главное окно</string>
+  </property>
+
+  <widget class="QWidget" name="centralwidget">
+
+   <layout class="QVBoxLayout" name="verticalLayout_main">
+
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
+    <item>
+     <layout class="QHBoxLayout" name="top_bar">
+      <item>
+       <spacer name="spacer_left">
+        <property name="orientation"><enum>Qt::Horizontal</enum></property>
+        <property name="sizeHint"><size><width>40</width><height>20</height></size></property>
+       </spacer>
+      </item>
+
+      <item>
+       <widget class="QLabel" name="label_user">
+        <property name="text"><string>Имя пользователя</string></property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QPushButton" name="btn_logout">
+        <property name="text"><string>Выйти</string></property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <!-- STACKED WIDGET -->
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+
+      <!-- СТРАНИЦА ГОСТЬ -->
+      <widget class="QWidget" name="page_guest">
+       <layout class="QVBoxLayout" name="vl_guest">
+
+        <item>
+         <widget class="QScrollArea" name="scroll_products">
+          <property name="widgetResizable"><bool>true</bool></property>
+
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <layout class="QVBoxLayout" name="layout_products">
+            <item>
+             <spacer name="spacer_bottom">
+              <property name="orientation"><enum>Qt::Vertical</enum></property>
+              <property name="sizeHint"><size><width>20</width><height>40</height></size></property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+
+         </widget>
+        </item>
+
+       </layout>
+      </widget>
+
+      <!-- СТРАНИЦА КЛИЕНТ -->
+      <widget class="QWidget" name="page_client">
+       <layout class="QVBoxLayout" name="vl_client">
+        <item><widget class="QLabel" name="label_client"><property name="text"><string>Страница клиента</string></property></widget></item>
+       </layout>
+      </widget>
+
+      <!-- СТРАНИЦА МЕНЕДЖЕР -->
+      <widget class="QWidget" name="page_manager">
+       <layout class="QVBoxLayout" name="vl_manager">
+        <item><widget class="QLabel" name="label_manager"><property name="text"><string>Страница менеджера</string></property></widget></item>
+       </layout>
+      </widget>
+
+      <!-- СТРАНИЦА АДМИН -->
+      <widget class="QWidget" name="page_admin">
+       <layout class="QVBoxLayout" name="vl_admin">
+        <item><widget class="QLabel" name="label_admin"><property name="text"><string>Страница администратора</string></property></widget></item>
+       </layout>
+      </widget>
+
+     </widget>
+    </item>
+
+   </layout>
+
+  </widget>
+
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
