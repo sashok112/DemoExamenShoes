@@ -2,6 +2,8 @@ import sys
 import os
 import psycopg2
 from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5.QtGui import QFont
+
 
 PATH_LOGIN_UI = "/home/astep/DemoExamenShoes/UI/login.ui"
 PATH_MAIN_UI = "/home/astep/DemoExamenShoes/UI/main.ui"
@@ -67,9 +69,9 @@ class LoginDialog(QtWidgets.QDialog):
         self.open_main("Гость", "guest")
 
     def open_main(self, full_name, role):
+        self.full_name = full_name
+        self.role = role
         self.accept()
-        self.main_win = MainWindow(full_name=full_name, role=role)
-        self.main_win.show()
 
 
 # =====================================================
@@ -114,7 +116,7 @@ class MainWindow(QtWidgets.QMainWindow):
             cur = conn.cursor()
 
             cur.execute("""
-                SELECT id, product_name, price, manufacturer, photo, category, discount, unit, supplier, description
+                SELECT id, product_name, price, manufacturer, photo, category, discount, unit, supplier, description, stock_quantity
                 FROM public.products;
             """)
 
@@ -135,11 +137,40 @@ class MainWindow(QtWidgets.QMainWindow):
                 item.widget().deleteLater()
 
         # Создание карточек
-        for pid, name, price, manufacturer, photo, category, discount, unit, supplier, description in rows:
+        for pid, name, price, manufacturer, photo, category, discount, unit, supplier, description, stock_quantity in rows:
             widget = uic.loadUi(PATH_PRODUCT_ITEM_UI)
 
             widget.name.setText(name)
-            widget.price.setText(f"{price} ₽")
+            # АЛГО для скидки и формирования цены
+
+            price = float(price)
+            discount = int(discount)
+
+            if discount > 0:
+                new_price = price * (1 - discount / 100)
+
+                # старая цена
+                font = widget.price.font()
+                font.setStrikeOut(True)
+                widget.price.setFont(font)
+                widget.price.setStyleSheet("color: red;")
+                widget.price.setText(f"{price:.2f} ₽")
+
+                # новая цена
+                widget.final_price.setText(f"{new_price:.2f} ₽")
+                widget.final_price.setStyleSheet("color: black;")
+
+            else:
+                widget.price.setText(f"{price:.2f} ₽")
+                widget.final_price.setText("")
+            if discount > 15:
+                widget.setStyleSheet("background-color: #2E8B57;")
+            if stock_quantity <= 0:
+                widget.setStyleSheet("background-color: lightblue;")
+
+
+            
+            
             widget.manufacturer.setText(manufacturer)
             widget.category.setText(category)
             widget.discount.setText(str(discount))
@@ -157,6 +188,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     )
                 else:
                     widget.photo.setText("Нет фото")
+                    #TODO Должна грузиться заглушка
             else:
                 widget.photo.setText("Нет фото")
 
@@ -167,8 +199,6 @@ class MainWindow(QtWidgets.QMainWindow):
     # ---------------------------------------------------
     def logout(self):
         self.close()
-        login = LoginDialog()
-        login.show()
 
 
 # =====================================================
@@ -177,10 +207,23 @@ class MainWindow(QtWidgets.QMainWindow):
 def main():
     app = QtWidgets.QApplication(sys.argv)
 
-    dlg = LoginDialog()
-    dlg.show()
+    while True:
+        login = LoginDialog()
+        result = login.exec()
 
-    sys.exit(app.exec_())
+        if result != QtWidgets.QDialog.Accepted:
+            break
+
+        window = MainWindow(
+            full_name=login.full_name,
+            role=login.role
+        )
+
+        window.show()
+        app.exec()
+
+    sys.exit()
+
 
 
 if __name__ == "__main__":

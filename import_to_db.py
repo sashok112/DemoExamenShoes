@@ -5,18 +5,18 @@ from typing import Dict, List
 DB_CONFIG = {
     "host": "localhost",
     "port": 5432,
-    "database": "test",
+    "database": "DE",
     "user": "postgres",
-    "password": "1234"
+    "password": "9090"
 }
 
-PATH_PRODUCTS = "./import/Tovar.xlsx"
-PATH_USERS = "./import/user_import.xlsx"
-PATH_ORDERS = "./import/sd.xlsx"
-PATH_POINTS = "./import/sd2.xlsx"
+PATH_PRODUCTS = "/home/astep/DemoExamenShoes/import/Tovar.xlsx"
+PATH_USERS = "/home/astep/DemoExamenShoes/import/user_import.xlsx"
+PATH_ORDERS = "/home/astep/DemoExamenShoes/import/Заказ_import.xlsx"
+PATH_POINTS = "/home/astep/DemoExamenShoes/import/Пункты выдачи_import.xlsx"
 
 
-def import_pickup_points(cur, path: str) -> Dict[int, int]:
+def import_pickup_points(cur, path):
     """
     Импортирует пункты выдачи в БД.
     Возвращает словарь: {индекс_из_файла: pickup_point_id}
@@ -70,7 +70,7 @@ def import_products(cur, path: str) -> int:
     products = pd.read_excel(path)
     
     for _, row in products.iterrows():
-        photo_path = row["Фото"] if pd.notna(row.get("Фото")) and row["Фото"] != "" else "Icon.JPG"
+        photo_path = row["Фото"] if pd.notna(row.get("Фото")) and row["Фото"] != "" else "picture.png"
         
         cur.execute("""
             INSERT INTO public.products (

@@ -93,14 +93,28 @@
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="price">
-       <property name="styleSheet">
-        <string notr="true">font-size: 16px; color: #006400;</string>
-       </property>
-       <property name="text">
-        <string>Цена: </string>
-       </property>
-      </widget>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="price">
+         <property name="styleSheet">
+          <string notr="true">font-size: 16px; color: #006400;</string>
+         </property>
+         <property name="text">
+          <string>Цена: </string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="final_price">
+         <property name="styleSheet">
+          <string notr="true">font-size: 16px; color: #006400;</string>
+         </property>
+         <property name="text">
+          <string>Цена: </string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item>
       <widget class="QLabel" name="unit">
