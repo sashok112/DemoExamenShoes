@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OrderFormDialog</class>
+ <widget class="QDialog" name="OrderFormDialog">
+  <property name="windowTitle"><string>Заказ</string></property>
+  <property name="minimumSize"><size><width>520</width><height>320</height></size></property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item><widget class="QLabel" name="lbl_title"><property name="text"><string>Заказ</string></property></widget></item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0"><widget class="QLabel" name="lbl_pickup_code"><property name="text"><string>Артикул (код получения)</string></property></widget></item>
+     <item row="0" column="1"><widget class="QLineEdit" name="ed_pickup_code"/></item>
+
+     <item row="1" column="0"><widget class="QLabel" name="lbl_status"><property name="text"><string>Статус</string></property></widget></item>
+     <item row="1" column="1"><widget class="QComboBox" name="cb_status"/></item>
+
+     <item row="2" column="0"><widget class="QLabel" name="lbl_pickup"><property name="text"><string>Адрес пункта выдачи</string></property></widget></item>
+     <item row="2" column="1"><widget class="QComboBox" name="cb_pickup"/></item>
+
+     <item row="3" column="0"><widget class="QLabel" name="lbl_order_date"><property name="text"><string>Дата заказа</string></property></widget></item>
+     <item row="3" column="1"><widget class="QDateEdit" name="de_order"><property name="calendarPopup"><bool>true</bool></property></widget></item>
+
+     <item row="4" column="0"><widget class="QLabel" name="lbl_delivery_date"><property name="text"><string>Дата доставки/выдачи</string></property></widget></item>
+     <item row="4" column="1"><widget class="QDateEdit" name="de_delivery"><property name="calendarPopup"><bool>true</bool></property></widget></item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hl_buttons">
+     <item><spacer name="spacer_btns"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_cancel"><property name="text"><string>Назад</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_save"><property name="text"><string>Сохранить</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

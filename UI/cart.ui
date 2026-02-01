@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CartDialog</class>
+ <widget class="QDialog" name="CartDialog">
+  <property name="windowTitle"><string>Оформление заказа</string></property>
+  <property name="minimumSize"><size><width>720</width><height>480</height></size></property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="lbl_title">
+     <property name="text"><string>Оформление заказа</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="table_items">
+     <property name="columnCount"><number>4</number></property>
+     <column>
+      <property name="text"><string>Товар</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Кол-во</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Цена</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Сумма</string></property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hl_row">
+     <item>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0"><widget class="QLabel" name="lbl_pickup"><property name="text"><string>Пункт выдачи</string></property></widget></item>
+       <item row="0" column="1"><widget class="QComboBox" name="cb_pickup"/></item>
+       <item row="1" column="0"><widget class="QLabel" name="lbl_delivery"><property name="text"><string>Дата выдачи/доставки</string></property></widget></item>
+       <item row="1" column="1"><widget class="QDateEdit" name="de_delivery"><property name="calendarPopup"><bool>true</bool></property></widget></item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="vl_total">
+       <item><widget class="QLabel" name="lbl_total_title"><property name="text"><string>Итого:</string></property></widget></item>
+       <item><widget class="QLabel" name="lbl_total"><property name="text"><string>0.00 ₽</string></property></widget></item>
+       <item><spacer name="spacer_total"><property name="orientation"><enum>Qt::Vertical</enum></property><property name="sizeHint"><size><width>20</width><height>40</height></size></property></spacer></item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hl_buttons">
+     <item><widget class="QPushButton" name="btn_remove"><property name="text"><string>Удалить позицию</string></property></widget></item>
+     <item><spacer name="spacer_btns"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_cancel"><property name="text"><string>Назад</string></property></widget></item>
+     <item><widget class="QPushButton" name="btn_confirm"><property name="text"><string>Оформить</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

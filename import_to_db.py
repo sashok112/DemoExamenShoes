@@ -7,13 +7,13 @@ DB_CONFIG = {
     "port": 5432,
     "database": "DE",
     "user": "postgres",
-    "password": "9090"
+    "password": "1234"
 }
 
-PATH_PRODUCTS = "/home/astep/DemoExamenShoes/import/Tovar.xlsx"
-PATH_USERS = "/home/astep/DemoExamenShoes/import/user_import.xlsx"
-PATH_ORDERS = "/home/astep/DemoExamenShoes/import/Заказ_import.xlsx"
-PATH_POINTS = "/home/astep/DemoExamenShoes/import/Пункты выдачи_import.xlsx"
+PATH_PRODUCTS = "./DemoExamenShoes/import/Tovar.xlsx"
+PATH_USERS = "./DemoExamenShoes/import/user_import.xlsx"
+PATH_ORDERS = "./DemoExamenShoes/import/oder_import.xlsx"
+PATH_POINTS = "./DemoExamenShoes/import/points_import.xlsx"
 
 
 def import_pickup_points(cur, path):
