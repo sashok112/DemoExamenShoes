@@ -69,22 +69,104 @@
       <!-- СТРАНИЦА КЛИЕНТ -->
       <widget class="QWidget" name="page_client">
        <layout class="QVBoxLayout" name="vl_client">
-        <item><widget class="QLabel" name="label_client"><property name="text"><string>Страница клиента</string></property></widget></item>
-       </layout>
+ <item>
+  <layout class="QHBoxLayout" name="hl_client_controls">
+   <item><widget class="QPushButton" name="btn_cart_client"><property name="text"><string>Корзина</string></property></widget></item>
+   <item><spacer name="spacer_c1"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+   <item><widget class="QLineEdit" name="ed_search_client"><property name="placeholderText"><string>Поиск по товарам...</string></property></widget></item>
+   <item><widget class="QComboBox" name="cb_supplier_client"/></item>
+   <item><widget class="QComboBox" name="cb_sort_client">
+     <item><property name="text"><string>Без сортировки</string></property></item>
+     <item><property name="text"><string>Кол-во ↑</string></property></item>
+     <item><property name="text"><string>Кол-во ↓</string></property></item>
+   </widget></item>
+  </layout>
+ </item>
+ <item>
+  <widget class="QScrollArea" name="scroll_products_client">
+   <property name="widgetResizable"><bool>true</bool></property>
+   <widget class="QWidget" name="scrollAreaWidgetContents_client">
+    <layout class="QVBoxLayout" name="layout_products_client">
+     <item>
+      <spacer name="spacer_client_bottom">
+       <property name="orientation"><enum>Qt::Vertical</enum></property>
+       <property name="sizeHint"><size><width>20</width><height>40</height></size></property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </item>
+</layout>
       </widget>
 
       <!-- СТРАНИЦА МЕНЕДЖЕР -->
       <widget class="QWidget" name="page_manager">
        <layout class="QVBoxLayout" name="vl_manager">
-        <item><widget class="QLabel" name="label_manager"><property name="text"><string>Страница менеджера</string></property></widget></item>
-       </layout>
+ <item>
+  <layout class="QHBoxLayout" name="hl_manager_controls">
+   <item><widget class="QPushButton" name="btn_orders_manager"><property name="text"><string>Заказы</string></property></widget></item>
+   <item><spacer name="spacer_m1"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+   <item><widget class="QLineEdit" name="ed_search_manager"><property name="placeholderText"><string>Поиск по товарам...</string></property></widget></item>
+   <item><widget class="QComboBox" name="cb_supplier_manager"/></item>
+   <item><widget class="QComboBox" name="cb_sort_manager">
+     <item><property name="text"><string>Без сортировки</string></property></item>
+     <item><property name="text"><string>Кол-во ↑</string></property></item>
+     <item><property name="text"><string>Кол-во ↓</string></property></item>
+   </widget></item>
+  </layout>
+ </item>
+ <item>
+  <widget class="QScrollArea" name="scroll_products_manager">
+   <property name="widgetResizable"><bool>true</bool></property>
+   <widget class="QWidget" name="scrollAreaWidgetContents_manager">
+    <layout class="QVBoxLayout" name="layout_products_manager">
+     <item>
+      <spacer name="spacer_manager_bottom">
+       <property name="orientation"><enum>Qt::Vertical</enum></property>
+       <property name="sizeHint"><size><width>20</width><height>40</height></size></property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </item>
+</layout>
       </widget>
 
       <!-- СТРАНИЦА АДМИН -->
       <widget class="QWidget" name="page_admin">
        <layout class="QVBoxLayout" name="vl_admin">
-        <item><widget class="QLabel" name="label_admin"><property name="text"><string>Страница администратора</string></property></widget></item>
-       </layout>
+ <item>
+  <layout class="QHBoxLayout" name="hl_admin_controls">
+   <item><widget class="QPushButton" name="btn_orders_admin"><property name="text"><string>Заказы</string></property></widget></item>
+   <item><widget class="QPushButton" name="btn_add_product_admin"><property name="text"><string>Добавить товар</string></property></widget></item>
+   <item><spacer name="spacer_a1"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+   <item><widget class="QLineEdit" name="ed_search_admin"><property name="placeholderText"><string>Поиск по товарам...</string></property></widget></item>
+   <item><widget class="QComboBox" name="cb_supplier_admin"/></item>
+   <item><widget class="QComboBox" name="cb_sort_admin">
+     <item><property name="text"><string>Без сортировки</string></property></item>
+     <item><property name="text"><string>Кол-во ↑</string></property></item>
+     <item><property name="text"><string>Кол-во ↓</string></property></item>
+   </widget></item>
+  </layout>
+ </item>
+ <item>
+  <widget class="QScrollArea" name="scroll_products_admin">
+   <property name="widgetResizable"><bool>true</bool></property>
+   <widget class="QWidget" name="scrollAreaWidgetContents_admin">
+    <layout class="QVBoxLayout" name="layout_products_admin">
+     <item>
+      <spacer name="spacer_admin_bottom">
+       <property name="orientation"><enum>Qt::Vertical</enum></property>
+       <property name="sizeHint"><size><width>20</width><height>40</height></size></property>
+      </spacer>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </item>
+</layout>
       </widget>
 
      </widget>

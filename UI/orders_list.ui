@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OrderListDialog</class>
+ <widget class="QDialog" name="OrderListDialog">
+  <property name="windowTitle"><string>Заказы</string></property>
+  <property name="minimumSize"><size><width>820</width><height>520</height></size></property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="hl_header">
+     <item><widget class="QLabel" name="lbl_title"><property name="text"><string>Заказы</string></property></widget></item>
+     <item><spacer name="spacer_header"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_add"><property name="text"><string>Добавить заказ</string></property></widget></item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QScrollArea" name="scroll_orders">
+     <property name="widgetResizable"><bool>true</bool></property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <layout class="QVBoxLayout" name="vl_orders">
+       <item>
+        <spacer name="spacer_bottom">
+         <property name="orientation"><enum>Qt::Vertical</enum></property>
+         <property name="sizeHint"><size><width>20</width><height>40</height></size></property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="hl_footer">
+     <item><spacer name="spacer_footer"><property name="orientation"><enum>Qt::Horizontal</enum></property><property name="sizeHint"><size><width>40</width><height>20</height></size></property></spacer></item>
+     <item><widget class="QPushButton" name="btn_close"><property name="text"><string>Назад</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
