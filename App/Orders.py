@@ -1,6 +1,7 @@
 import os
 from PyQt5 import QtCore, QtGui, QtWidgets, uic
 
+from OrderForm import OrderForm
 from utils import *
 from config import *
 
