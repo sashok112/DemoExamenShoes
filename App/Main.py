@@ -133,15 +133,18 @@ class Main(QtWidgets.QMainWindow):
             w.unit.setText(p["unit"]); w.supplier.setText(p["supplier"]); w.description.setText(p["description"]); w.stock.setText(str(p["stock_quantity"]))
             pr,dc=float(p["price"]),float(p["discount"])
             # Отображение цены и скидки (зачёркнутая старая цена и новая)
+            fp=pr*(1-dc/100.0)
+            print(fp, dc)
+            w.final_price.setText(f"{fp:.2f} ₽")
             if dc>0:
-                fp=pr*(1-dc/100.0); f=w.price.font(); f.setStrikeOut(True)
+                f=w.price.font(); f.setStrikeOut(True)
                 w.price.setFont(f); w.price.setStyleSheet("color:red;")
-                w.price.setText(f"{pr:.2f} ₽"); w.final_price.setText(f"{fp:.2f} ₽")
-            if dc > 15:
-                w.setStyleSheet("background-color: #2E8B57;")
+                w.price.setText(f"{pr:.2f} ₽")
+                w.final_price.setText(f"{fp:.2f} ₽")
+                if dc > 15:
+                    w.setStyleSheet("background-color: #2E8B57;")
             else:
                 w.price.setText(f"{pr:.2f} ₽"); w.final_price.setText("")
-            
             if int(p["stock_quantity"]) <= 0:
                 w.setStyleSheet("background-color: lightblue;")
             # Загрузка изображения товара или картинки по умолчанию
